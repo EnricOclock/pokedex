@@ -1,6 +1,6 @@
-import { apiBaseUrl } from "./config.js";
+const apiBaseUrl = import.meta.env.VITE_API_URL_V1  || "http://localhost:3001/api";
 
-export async function getPokemons(pokemon) {
+export async function getPokemons() {
     try {
         
         // On récupère les listes par on les console.log : fetch : GET /pokemons
@@ -18,7 +18,7 @@ export async function getPokemons(pokemon) {
     
       } catch (error) {
         // CAS où le backend ne répond pas
-        //console.error(error);
+        console.error(error);
         return null; // Si une erreur a lieu, on renvoie null
       }
     }
@@ -41,7 +41,7 @@ export async function getOnePokemon() {
       
         } catch (error) {
           // CAS où le backend ne répond pas
-          //console.error(error);
+          console.error(error);
           return null; // Si une erreur a lieu, on renvoie null
         }
       }   

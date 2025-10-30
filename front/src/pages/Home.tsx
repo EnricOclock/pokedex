@@ -1,7 +1,10 @@
 "use client";
 
-import Card from "./Card";
-
+import { useState } from "react";
+import Card from "../components/Card";
+import Modal from "../components/ui/modal";
+import { useGetAllPokemonsQuery } from "@/store/api/pokemonApi";
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 // TypeScript interface for the props of each NFT card
 export interface CardProps {
@@ -12,8 +15,6 @@ export interface CardProps {
   price: string;
   timeLeft: string;
 }
-
-// Data for the NFT cards, with updated image URLs as requested.
 
 
 const nftData: CardProps[] = [
@@ -115,15 +116,33 @@ const nftData: CardProps[] = [
   },
 ];
 
+
+
 // Main App Component to display the grid of NFT cards
 export default function Home() {
+
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [selectedPokemon, setSelectedPokemon] = useState<CardProps>();
+
+  const { data: pokemons, isLoading, isError, error} = useGetAllPokemonsQuery();
+
+  //if (isLoading) return <p>Chargement...</p>;
+  //if (isError) return <p>Erreur : {(error as FetchBaseQueryError).status}</p>;
+ 
+  console.log('data :', pokemons)
+
+  function handleShowDetails () {
+    setShowDetailsModal(true);
+  }
+
+
   return (
     <div className="relative p-4 sm:p-6 lg:p-8 overflow-hidden">
       {/* Google Font Import */}
       <style>
         {`@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');`}
       </style>
-
+      
       <div className="relative z-10 w-full max-w-[1600px] mx-auto">
         {/* Header Section */}
         <div className="mb-6 sm:mb-8 lg:mb-12 text-center">
@@ -136,7 +155,7 @@ export default function Home() {
         </div>
 
         {/* Fully responsive grid with 4 columns max on desktop */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
+        <div onClick={handleShowDetails} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
           {nftData.map((nft) => (
             <Card key={nft.id} {...nft} />
           ))}
@@ -155,7 +174,13 @@ export default function Home() {
           font-family: 'Space Grotesk', sans-serif;
         }
       `}</style>
-
+    <Modal
+      isOpen={showDetailsModal}
+      onClose={() => setShowDetailsModal(false)}
+      title="Details du pokémon"
+    >
+      <div>Coucou</div>
+    </Modal>
     </div>
   );
 };

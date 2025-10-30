@@ -1,4 +1,4 @@
-import type { CardProps } from './Home';
+import type { CardProps } from '../pages/Home';
 
 // SVG Icon Components
 const HeartIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
