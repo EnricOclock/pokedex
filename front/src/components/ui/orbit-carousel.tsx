@@ -3,73 +3,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Briefcase, ChevronLeft, ChevronRight } from "lucide-react";
-
-// --- Data: team members ---
-const people = [
-  {
-    id: 1,
-    name: "Albert Einstein",
-    role: "Theoretical Physicist",
-    email: "einstein@example.com",
-    profile:
-      "https://upload.wikimedia.org/wikipedia/commons/d/d3/Albert_Einstein_Head.jpg",
-  },
-  {
-    id: 2,
-    name: "Isaac Newton",
-    role: "Physicist & Mathematician",
-    email: "newton@example.com",
-    profile:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Portrait_of_Sir_Isaac_Newton%2C_1689_%28brightened%29.jpg/1200px-Portrait_of_Sir_Isaac_Newton%2C_1689_%28brightened%29.jpg",
-  },
-  {
-    id: 3,
-    name: "Marie Curie",
-    role: "Physicist & Chemist",
-    email: "curie@example.com",
-    profile:
-      "https://upload.wikimedia.org/wikipedia/commons/7/7e/Marie_Curie_c1920.jpg",
-  },
-  {
-    id: 4,
-    name: "Nikola Tesla",
-    role: "Inventor & Engineer",
-    email: "tesla@example.com",
-    profile: "https://upload.wikimedia.org/wikipedia/commons/d/d4/N.Tesla.JPG",
-  },
-  {
-    id: 5,
-    name: "Charles Darwin",
-    role: "Naturalist & Biologist",
-    email: "darwin@example.com",
-    profile:
-      "https://hips.hearstapps.com/hmg-prod/images/gettyimages-79035252.jpg?crop=1xw:1.0xh;center,top&resize=640:*",
-  },
-  {
-    id: 6,
-    name: "Galileo Galilei",
-    role: "Astronomer & Physicist",
-    email: "galileo@example.com",
-    profile:
-      "https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_3840,h_1920,g_auto/dpr_auto/f_auto/q_auto:eco/v1/galileo-galilei-gettyimages-51246872?_a=BAVAZGDX0",
-  },
-  {
-    id: 7,
-    name: "Stephen Hawking",
-    role: "Theoretical Physicist",
-    email: "hawking@example.com",
-    profile:
-      "https://upload.wikimedia.org/wikipedia/commons/e/eb/Stephen_Hawking.StarChild.jpg",
-  },
-  {
-    id: 8,
-    name: "Richard Feynman",
-    role: "Theoretical Physicist",
-    email: "feynman@example.com",
-    profile:
-      "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiz7DeuUmHN7TiT3xf7cV7UPBJNDtEvjNZcgMmNElTmOJYaec6zQI0UiLU04jZP6hqkeLcrnaC5NP4WC_zRQzP3_QhLumNxyzPOsC-WEmWQyYsadq1Eg_V_jEjDfCdddeQgJjY_OOB1KLMj6o2ShA6ycHwM91I430Yr9tkYTn6759jDmcGAsONOACbi/w1200-h630-p-k-no-nu/richard%20feynman%20quotes%20atheism%20religion%20science.png",
-  },
-];
+import type { TeamMember } from "@/pages/Teams";
 
 // --- Utility for fallback images ---
 const safeImage = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -93,10 +27,13 @@ const useIsMobile = (breakpoint: number = 768): boolean => {
   return isMobile;
 };
 
+interface TeamMembersProps {
+  teamMembers: TeamMember[]
+}
 
 
 // --- Main Component ---
-export default function OrbitCarousel() {
+export default function OrbitCarousel({teamMembers}:TeamMembersProps) {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const isMobile = useIsMobile();
 
@@ -106,13 +43,13 @@ export default function OrbitCarousel() {
 
   // Calculate rotation for each profile
   const getRotation = React.useCallback(
-    (index: number): number => (index - activeIndex) * (360 / people.length),
+    (index: number): number => (index - activeIndex) * (360 / teamMembers.length),
     [activeIndex]
   );
 
   // Navigation
-  const next = () => setActiveIndex((i) => (i + 1) % people.length);
-  const prev = () => setActiveIndex((i) => (i - 1 + people.length) % people.length);
+  const next = () => setActiveIndex((i) => (i + 1) % teamMembers.length);
+  const prev = () => setActiveIndex((i) => (i - 1 + teamMembers.length) % teamMembers.length);
 
   const handleProfileClick = React.useCallback((index: number) => {
     if (index === activeIndex) return;
@@ -152,7 +89,7 @@ export default function OrbitCarousel() {
         {/* Active Person Card - Smaller size */}
         <AnimatePresence mode="wait">
           <motion.div
-            key={people[activeIndex].id}
+            key={teamMembers[activeIndex].id}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -166,8 +103,8 @@ export default function OrbitCarousel() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              src={people[activeIndex].profile}
-              alt={people[activeIndex].name}
+              src={teamMembers[activeIndex].imageUrl}
+              alt={teamMembers[activeIndex].name}
               onError={safeImage}
               className="w-16 h-16 md:w-20 md:h-20 rounded-full mx-auto -mt-10 md:-mt-12 border-4 border-white dark:border-black object-cover shadow-md"
             />
@@ -177,15 +114,11 @@ export default function OrbitCarousel() {
               transition={{ duration: 0.3, delay: 0.15 }}
             >
               <h2 className="mt-2 text-base md:text-lg font-bold text-gray-800 dark:text-white">
-                {people[activeIndex].name}
+                {teamMembers[activeIndex].name}
               </h2>
               <div className="flex items-center justify-center text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
                 <Briefcase size={12} className="mr-1" /> 
-                <span className="truncate">{people[activeIndex].role}</span>
-              </div>
-              <div className="flex items-center justify-center text-xs text-gray-500 dark:text-gray-500 mt-0.5">
-                <Mail size={12} className="mr-1" /> 
-                <span className="truncate">{people[activeIndex].email}</span>
+                <span className="truncate">{teamMembers[activeIndex].role}</span>
               </div>
             </motion.div>
             <motion.div 
@@ -214,7 +147,7 @@ export default function OrbitCarousel() {
         </AnimatePresence>
 
         {/* Orbiting Profiles with Counter-Rotation */}
-        {people.map((p, i) => {
+        {teamMembers.map((p, i) => {
           const rotation = getRotation(i);
           return (
             <motion.div
@@ -244,7 +177,7 @@ export default function OrbitCarousel() {
                 className="w-full h-full"
               >
                 <motion.img
-                  src={p.profile}
+                  src={p.imageUrl}
                   alt={p.name}
                   onError={safeImage}
                   onClick={() => handleProfileClick(i)}
