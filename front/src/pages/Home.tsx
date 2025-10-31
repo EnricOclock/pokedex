@@ -5,6 +5,7 @@ import Card from "../components/Card";
 import Modal from "../components/ui/modal";
 import { useGetAllPokemonsQuery } from "@/store/api/pokemonApi";
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import type { Pokemon } from "@/store/api/pokemonApi";
 
 // TypeScript interface for the props of each NFT card
 export interface CardProps {
@@ -15,6 +16,8 @@ export interface CardProps {
   price: string;
   timeLeft: string;
 }
+
+
 
 
 const nftData: CardProps[] = [
@@ -122,12 +125,12 @@ const nftData: CardProps[] = [
 export default function Home() {
 
   const [showDetailsModal, setShowDetailsModal] = useState(false);
-  const [selectedPokemon, setSelectedPokemon] = useState<CardProps>();
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon>();
 
   const { data: pokemons, isLoading, isError, error} = useGetAllPokemonsQuery();
 
-  //if (isLoading) return <p>Chargement...</p>;
-  //if (isError) return <p>Erreur : {(error as FetchBaseQueryError).status}</p>;
+  if (isLoading) return <p>Chargement...</p>;
+  if (isError) return <p>Erreur : {(error as FetchBaseQueryError).status}</p>;
  
   console.log('data :', pokemons)
 
@@ -156,8 +159,8 @@ export default function Home() {
 
         {/* Fully responsive grid with 4 columns max on desktop */}
         <div onClick={handleShowDetails} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
-          {nftData.map((nft) => (
-            <Card key={nft.id} {...nft} />
+          {pokemons?.map((pokemon) => (
+            <Card key={pokemon.id} {...pokemon} />
           ))}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import type { CardProps } from '../pages/Home';
+import type { Pokemon } from '@/store/api/pokemonApi';
 
 // SVG Icon Components
 const HeartIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
@@ -17,13 +18,13 @@ const EthIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     </svg>
 );
 
-export default function Card ({ imageUrl, title, highestBid, price}: CardProps) {
+export default function Card ({ id, name, hp, atk, def, atk_spe, def_spe, speed }: Pokemon) {
   return (
     <div className="relative group overflow-hidden rounded-2xl sm:rounded-3xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-lg shadow-gray-200/50 dark:shadow-black/20 transition-all duration-300 hover:shadow-xl hover:shadow-gray-300/50 dark:hover:shadow-black/40 hover:-translate-y-1 hover:border-gray-300 dark:hover:border-gray-700 w-full font-space-grotesk">
       <div className="relative p-2 sm:p-2.5">
           {/* Card Image Section */}
           <div className="relative">
-            <img src={imageUrl} alt={title} className="shadow-2xl w-full h-auto rounded-xl sm:rounded-2xl object-cover aspect-square" />
+            <img src={`./img/${id}.webp`} alt={name} className="shadow-2xl w-full h-auto rounded-xl sm:rounded-2xl object-cover aspect-square" />
 
 
             <button className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-black/70 dark:bg-black/70 text-white p-1.5 sm:p-2.5 rounded-full transition-colors hover:text-red-500 backdrop-blur-sm border border-white/20">
@@ -35,15 +36,31 @@ export default function Card ({ imageUrl, title, highestBid, price}: CardProps) 
           {/* Card Content Section */}
           <div className="mt-3 sm:mt-4 px-1 sm:px-1.5 pb-2 sm:pb-3 pt-1 sm:pt-2">
             <div className="flex justify-between items-center">
-                <h3 className="text-base sm:text-xl font-bold text-gray-900 dark:text-white truncate pr-2" title={title}>{title}</h3>
+                <h3 className="text-base sm:text-xl font-bold text-gray-900 dark:text-white truncate pr-2" title={name}>{name}</h3>
                 <EthIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 dark:text-gray-400 shrink-0" />
             </div>
 
-            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Highest Bid {highestBid}</p>
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">HP {hp}</p>
 
             <div className="mt-3 sm:mt-4 flex justify-between items-center">
-              <p className="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">Price</p>
-              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{price}</p>
+              <p className="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">Attaque</p>
+              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{atk}</p>
+            </div>
+            <div className="mt-3 sm:mt-4 flex justify-between items-center">
+              <p className="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">Défense</p>
+              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{def}</p>
+            </div>
+            <div className="mt-3 sm:mt-4 flex justify-between items-center">
+              <p className="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">Attaque spéciale</p>
+              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{atk_spe}</p>
+            </div>
+            <div className="mt-3 sm:mt-4 flex justify-between items-center">
+              <p className="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">Défense spéciale</p>
+              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{def_spe}</p>
+            </div>
+            <div className="mt-3 sm:mt-4 flex justify-between items-center">
+              <p className="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">Speed</p>
+              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{speed}</p>
             </div>
           </div>
       </div>
