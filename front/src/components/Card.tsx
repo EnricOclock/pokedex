@@ -1,4 +1,3 @@
-import type { CardProps } from '../pages/Home';
 import type { Pokemon } from '@/store/api/pokemonApi';
 
 // SVG Icon Components

@@ -44,14 +44,26 @@ function Drawer ({
         onOpenChange(false);
       }
     };
-
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [onOpenChange]);
 
   return (
     <DrawerContext.Provider value={{ open, onOpenChange, side }}>
-      <AnimatePresence>{open && <>{children}</>}</AnimatePresence>
+      <AnimatePresence>
+        {open && (
+          <React.Fragment>
+            <DrawerOverlay key="overlay" />
+              <DrawerContent key="content">
+                <DrawerHeader>
+                  <DrawerTitle className="items-start">Mon Profil</DrawerTitle>
+                </DrawerHeader>
+                <div className="p-6">Contenu</div>
+              </DrawerContent>
+            
+          </React.Fragment>
+        )}
+      </AnimatePresence>
     </DrawerContext.Provider>
   );
 };

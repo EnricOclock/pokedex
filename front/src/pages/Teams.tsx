@@ -43,7 +43,7 @@ const TeamMemberCard: React.FC<{ member: TeamMember }> = ({ member }) => (
 );
 
 // Main component that renders the entire section
-const TeamSection: React.FC = () => {
+const Teams: React.FC = () => {
   return (
     <section className="font-sans">
       <div className=" mx-auto px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
@@ -68,4 +68,4 @@ const TeamSection: React.FC = () => {
   );
 };
 
-export default TeamSection;
+export default Teams;
