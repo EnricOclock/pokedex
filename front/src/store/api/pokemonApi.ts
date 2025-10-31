@@ -13,6 +13,13 @@ export interface Pokemon {
   atk_spe: number;
   def_spe: number;
   speed: number;
+  types: PokeType[];
+}
+
+export interface PokeType {
+  id: number;
+  name: string;
+  color: string;
 }
 
 

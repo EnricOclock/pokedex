@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import { useState } from 'react';
 import Home from './pages/Home';
 import MenuBar from './components/MenuBar';
 import { Routes, Route } from 'react-router-dom';
@@ -12,12 +12,10 @@ export default function App() {
 
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-  console.log("Etat isProfileOpen: ", isProfileOpen)
-
   return (
     <div className="flex min-h-svh flex-col items-center justify-center">
-      <MenuBar onProfileClick={() => {console.log('click sur Profle');
-        setIsProfileOpen(true)}}/>
+      <MenuBar onProfileClick={() => 
+        setIsProfileOpen(true)}/>
       <main>
         <Routes>
           <Route path="/" element={<Home/>}/>

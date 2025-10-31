@@ -16,7 +16,7 @@ interface DrawerContextProps {
 }
 
 interface DrawerProps {
-  children: ReactNode;
+  children?: ReactNode;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   side?: DrawerSide;
@@ -33,7 +33,6 @@ const useDrawerContext = () => {
 };
 
 function Drawer ({
-  children,
   open,
   onOpenChange,
   side = "right",

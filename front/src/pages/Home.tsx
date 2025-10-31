@@ -23,6 +23,8 @@ export default function Home() {
     setShowDetailsModal(true);
   }
 
+  console.log('Pokemon DATA :', pokemons)
+
   return (
     <div className="relative p-4 sm:p-6 lg:p-8 overflow-hidden">
       {/* Google Font Import */}

@@ -1,4 +1,8 @@
+'use client'
+
 import type { Pokemon } from '@/store/api/pokemonApi';
+import { Badge } from './ui/badge';
+
 
 // SVG Icon Components
 const HeartIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
@@ -7,17 +11,8 @@ const HeartIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-const EthIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <path d="M12.0002 22.6667L11.9468 22.5867L5.3335 14L12.0002 17.3333L18.6668 14L12.0002 22.6667Z" fill="currentColor"/>
-        <path d="M12 1.33331L5.33333 12.6666L12 16V1.33331Z" fill="currentColor" fillOpacity="0.6"/>
-        <path d="M12 1.33331L18.6667 12.6666L12 16V1.33331Z" fill="currentColor" fillOpacity="0.8"/>
-        <path d="M5.3335 14L12.0002 17.3333V22.6666L5.3335 14Z" fill="currentColor" fillOpacity="0.6"/>
-        <path d="M18.6668 14L12.0002 17.3333V22.6666L18.6668 14Z" fill="currentColor" fillOpacity="0.8"/>
-    </svg>
-);
 
-export default function Card ({ id, name, hp, atk, def, atk_spe, def_spe, speed }: Pokemon) {
+export default function Card ({ id, name, hp, atk, def, atk_spe, def_spe, speed, types }: Pokemon) {
   return (
     <div className="relative group overflow-hidden rounded-2xl sm:rounded-3xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-lg shadow-gray-200/50 dark:shadow-black/20 transition-all duration-300 hover:shadow-xl hover:shadow-gray-300/50 dark:hover:shadow-black/40 hover:-translate-y-1 hover:border-gray-300 dark:hover:border-gray-700 w-full font-space-grotesk">
       <div className="relative p-2 sm:p-2.5">
@@ -36,7 +31,8 @@ export default function Card ({ id, name, hp, atk, def, atk_spe, def_spe, speed 
           <div className="mt-3 sm:mt-4 px-1 sm:px-1.5 pb-2 sm:pb-3 pt-1 sm:pt-2">
             <div className="flex justify-between items-center">
                 <h3 className="text-base sm:text-xl font-bold text-gray-900 dark:text-white truncate pr-2" title={name}>{name}</h3>
-                <EthIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 dark:text-gray-400 shrink-0" />
+                {types?.map((type) => (
+                <Badge key={type.id}>{type.name}</Badge>))}
             </div>
 
             <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">HP {hp}</p>
