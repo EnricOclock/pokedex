@@ -4,6 +4,8 @@ import type { Pokemon } from '@/store/api/pokemonApi';
 import { Badge } from './ui/badge';
 
 
+
+
 // SVG Icon Components
 const HeartIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -13,6 +15,8 @@ const HeartIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 
 
 export default function Card ({ id, name, hp, atk, def, atk_spe, def_spe, speed, types }: Pokemon) {
+  
+
   return (
     <div className="relative group overflow-hidden rounded-2xl sm:rounded-3xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-lg shadow-gray-200/50 dark:shadow-black/20 transition-all duration-300 hover:shadow-xl hover:shadow-gray-300/50 dark:hover:shadow-black/40 hover:-translate-y-1 hover:border-gray-300 dark:hover:border-gray-700 w-full font-space-grotesk">
       <div className="relative p-2 sm:p-2.5">
@@ -21,9 +25,10 @@ export default function Card ({ id, name, hp, atk, def, atk_spe, def_spe, speed,
             <img src={`./img/${id}.webp`} alt={name} className="shadow-2xl w-full h-auto rounded-xl sm:rounded-2xl object-cover aspect-square" />
 
 
-            <button className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-black/70 dark:bg-black/70 text-white p-1.5 sm:p-2.5 rounded-full transition-colors hover:text-red-500 backdrop-blur-sm border border-white/20">
+            <div className="flex gap-2 absolute top-2 right-2 sm:top-4 sm:right-4 bg-black/70 dark:bg-black/70 text-white p-1.5 sm:p-2.5 rounded-full transition-colors hover:text-red-500 backdrop-blur-sm border border-white/20">
               <HeartIcon className="w-4 h-4 sm:w-6 sm:h-6" />
-            </button>
+              <p className="text-xs sm:text-sm text-white dark:text-gray-400 mt-1">{hp}</p>
+            </div>
 
           </div>
 
@@ -35,7 +40,7 @@ export default function Card ({ id, name, hp, atk, def, atk_spe, def_spe, speed,
                 <Badge key={type.id}>{type.name}</Badge>))}
             </div>
 
-            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">HP {hp}</p>
+            
 
             <div className="mt-3 sm:mt-4 flex justify-between items-center">
               <p className="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">Attaque</p>

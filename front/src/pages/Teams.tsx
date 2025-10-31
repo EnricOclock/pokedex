@@ -1,5 +1,9 @@
 'use client'
 import React from 'react';
+import Modal from "../components/ui/modal";
+import { useState } from 'react';
+import OrbitCarousel from '@/components/ui/orbit-carousel';
+
 
 // Define the type for a single team member for type safety
 interface TeamMember {
@@ -44,6 +48,14 @@ const TeamMemberCard: React.FC<{ member: TeamMember }> = ({ member }) => (
 
 // Main component that renders the entire section
 const Teams: React.FC = () => {
+
+  const [showTeamModal, setShowTeamModal] = useState(false);
+
+  function handleShowTeam () {
+    
+    setShowTeamModal(true);
+  }
+
   return (
     <section className="font-sans">
       <div className=" mx-auto px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
@@ -58,11 +70,19 @@ const Teams: React.FC = () => {
         </div>
 
         {/* Team Members Grid - Adjusted for 12 members */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-6 gap-y-12">
+        <div onClick={handleShowTeam} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-6 gap-y-12 p-4 border rounded-2xl shadow-2xl">
           {teamMembers.map((member) => (
             <TeamMemberCard key={member.name} member={member} />
           ))}
         </div>
+              <Modal
+                isOpen={showTeamModal}
+                onClose={() => setShowTeamModal(false)}
+                title="Details de l'équipe ..."
+              >
+                <OrbitCarousel />
+          
+              </Modal>
       </div>
     </section>
   );
