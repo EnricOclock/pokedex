@@ -6,6 +6,8 @@ import Modal from "../components/ui/modal";
 import { useGetAllPokemonsQuery } from "@/store/api/pokemonApi";
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import type { Pokemon } from "@/store/api/pokemonApi";
+import { TeamMemberCard } from "@/components/TeamMemberCard";
+
 
 
 export default function Home() {
@@ -46,7 +48,7 @@ export default function Home() {
         {/* Fully responsive grid with 4 columns max on desktop */}
         <div onClick={handleShowDetails} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
           {pokemons?.map((pokemon) => (
-            <Card key={pokemon.id} {...pokemon} />
+            <TeamMemberCard key={pokemon.id} pokemon={pokemon}/>
           ))}
         </div>
       </div>

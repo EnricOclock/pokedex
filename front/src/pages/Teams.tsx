@@ -6,7 +6,7 @@ import OrbitCarousel from '@/components/ui/orbit-carousel';
 
 
 // Define the type for a single team member for type safety
-interface TeamMember {
+export interface TeamMember {
   id: number;
   name: string;
   role: string;
