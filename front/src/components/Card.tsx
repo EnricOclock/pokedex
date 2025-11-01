@@ -13,12 +13,16 @@ const HeartIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
+type CardProps = Pokemon & {
+  onClick?: () => void;
+};
 
-export default function Card ({ id, name, hp, atk, def, atk_spe, def_spe, speed, types }: Pokemon) {
+
+export default function Card ({ onClick, id, name, hp, atk, def, atk_spe, def_spe, speed, types }: CardProps) {
   
 
   return (
-    <div className="relative group overflow-hidden rounded-2xl sm:rounded-3xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-lg shadow-gray-200/50 dark:shadow-black/20 transition-all duration-300 hover:shadow-xl hover:shadow-gray-300/50 dark:hover:shadow-black/40 hover:-translate-y-1 hover:border-gray-300 dark:hover:border-gray-700 w-full font-space-grotesk">
+    <div onClick={onClick} className="cursor-pointer relative group overflow-hidden rounded-2xl sm:rounded-3xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-lg shadow-gray-200/50 dark:shadow-black/20 transition-all duration-300 hover:shadow-xl hover:shadow-gray-300/50 dark:hover:shadow-black/40 hover:-translate-y-1 hover:border-gray-300 dark:hover:border-gray-700 w-full font-space-grotesk">
       <div className="relative p-2 sm:p-2.5">
           {/* Card Image Section */}
           <div className="relative">

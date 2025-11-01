@@ -20,8 +20,8 @@ export default function Home() {
   if (isLoading) return <p>Chargement...</p>;
   if (isError) return <p>Erreur : {(error as FetchBaseQueryError).status}</p>;
  
-  function handleShowDetails () {
-    
+  function handleShowDetails (pokemon: Pokemon) {
+    setSelectedPokemon(pokemon);
     setShowDetailsModal(true);
   }
 
@@ -46,9 +46,9 @@ export default function Home() {
         </div>
 
         {/* Fully responsive grid with 4 columns max on desktop */}
-        <div onClick={handleShowDetails} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
+        <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
           {pokemons?.map((pokemon) => (
-            <TeamMemberCard key={pokemon.id} pokemon={pokemon}/>
+            <Card onClick={() => handleShowDetails(pokemon)} key={pokemon.id} {...pokemon} />
           ))}
         </div>
       </div>
@@ -70,7 +70,13 @@ export default function Home() {
       onClose={() => setShowDetailsModal(false)}
       title="Details du pokémon"
     >
-      <div>Coucou</div>
+      {selectedPokemon ? (
+          <div className="text-lg font-medium text-gray-800 dark:text-white">
+            {selectedPokemon.name}
+          </div>
+        ) : (
+          <div>Aucun Pokémon sélectionné</div>
+        )}
     </Modal>
     </div>
   );
