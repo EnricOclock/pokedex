@@ -13,12 +13,13 @@ const HeartIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-type CardProps = Pokemon & {
+interface CardProps {
   onClick?: () => void;
+  pokemon: Pokemon
 };
 
 
-export default function Card ({ onClick, id, name, hp, atk, def, atk_spe, def_spe, speed, types }: CardProps) {
+export default function Card ({ onClick, pokemon }: CardProps) {
   
 
   return (
@@ -26,12 +27,12 @@ export default function Card ({ onClick, id, name, hp, atk, def, atk_spe, def_sp
       <div className="relative p-2 sm:p-2.5">
           {/* Card Image Section */}
           <div className="relative">
-            <img src={`./img/${id}.webp`} alt={name} className="shadow-2xl w-full h-auto rounded-xl sm:rounded-2xl object-cover aspect-square" />
+            <img src={`./img/${pokemon.id}.webp`} alt={pokemon.name} className="shadow-2xl w-full h-auto rounded-xl sm:rounded-2xl object-cover aspect-square" />
 
 
             <div className="flex gap-2 absolute top-2 right-2 sm:top-4 sm:right-4 bg-black/70 dark:bg-black/70 text-white p-1.5 sm:p-2.5 rounded-full transition-colors hover:text-red-500 backdrop-blur-sm border border-white/20">
               <HeartIcon className="w-4 h-4 sm:w-6 sm:h-6" />
-              <p className="text-xs sm:text-sm text-white dark:text-gray-400 mt-1">{hp}</p>
+              <p className="text-xs sm:text-sm text-white dark:text-gray-400 mt-1">{pokemon.hp}</p>
             </div>
 
           </div>
@@ -39,8 +40,8 @@ export default function Card ({ onClick, id, name, hp, atk, def, atk_spe, def_sp
           {/* Card Content Section */}
           <div className="mt-3 sm:mt-4 px-1 sm:px-1.5 pb-2 sm:pb-3 pt-1 sm:pt-2">
             <div className="flex justify-between items-center">
-                <h3 className="text-base sm:text-xl font-bold text-gray-900 dark:text-white truncate pr-2" title={name}>{name}</h3>
-                {types?.map((type) => (
+                <h3 className="text-base sm:text-xl font-bold text-gray-900 dark:text-white truncate pr-2" title={pokemon.name}>{pokemon.name}</h3>
+                {pokemon.types.map((type) => (
                 <Badge key={type.id}>{type.name}</Badge>))}
             </div>
 
@@ -48,23 +49,23 @@ export default function Card ({ onClick, id, name, hp, atk, def, atk_spe, def_sp
 
             <div className="mt-3 sm:mt-4 flex justify-between items-center">
               <p className="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">Attaque</p>
-              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{atk}</p>
+              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{pokemon.atk}</p>
             </div>
             <div className="mt-3 sm:mt-4 flex justify-between items-center">
               <p className="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">Défense</p>
-              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{def}</p>
+              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{pokemon.def}</p>
             </div>
             <div className="mt-3 sm:mt-4 flex justify-between items-center">
               <p className="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">Attaque spéciale</p>
-              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{atk_spe}</p>
+              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{pokemon.atk_spe}</p>
             </div>
             <div className="mt-3 sm:mt-4 flex justify-between items-center">
               <p className="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">Défense spéciale</p>
-              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{def_spe}</p>
+              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{pokemon.def_spe}</p>
             </div>
             <div className="mt-3 sm:mt-4 flex justify-between items-center">
               <p className="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">Speed</p>
-              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{speed}</p>
+              <p className="text-sm sm:text-lg font-bold text-cyan-600 dark:text-cyan-400">{pokemon.speed}</p>
             </div>
           </div>
       </div>
