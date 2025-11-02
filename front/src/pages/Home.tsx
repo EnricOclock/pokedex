@@ -48,7 +48,7 @@ export default function Home() {
         {/* Fully responsive grid with 4 columns max on desktop */}
         <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
           {pokemons?.map((pokemon) => (
-            <Card onClick={() => handleShowDetails(pokemon)} key={pokemon.id} pokemon={pokemon} />
+            <TeamMemberCard onClick={() => handleShowDetails(pokemon)} key={pokemon.id} pokemon={pokemon} />
           ))}
         </div>
       </div>
@@ -68,10 +68,10 @@ export default function Home() {
     <Modal
       isOpen={showDetailsModal}
       onClose={() => setShowDetailsModal(false)}
-      title="Details du pokémon"
+      title={"Details du pokémon"}
     >
       {selectedPokemon ? (
-          <TeamMemberCard pokemon={selectedPokemon}/>
+          <Card pokemon={selectedPokemon}/>
         ) : (
           <div>Aucun Pokémon sélectionné</div>
         )}
