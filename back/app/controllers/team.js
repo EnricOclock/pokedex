@@ -1,11 +1,18 @@
 import { Team } from '../models/associations.js'; // ancien camino'../models/team.model.js'
-
+import { Pokemon } from '../models/associations.js';
 
 export async function getAllTeams(req, res) {
   try {
     // Récupérer la liste des Pokemons
     const teams = await Team.findAll({
-    order: [["name", "asc"]]});
+    order: [["name", "asc"]],
+    include: [
+      {
+        model: Pokemon,
+        as: "pokemons", // doit correspondre à l'alias défini dans le modèle
+        through: { attributes: [] }
+      },
+    ],});
       
     // Renvoyer la liste des teams au format JSON avec le code succès 200
     res.status(200).json(teams);

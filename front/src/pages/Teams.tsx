@@ -3,6 +3,9 @@ import React from 'react';
 import Modal from "../components/ui/modal";
 import { useState } from 'react';
 import OrbitCarousel from '@/components/ui/orbit-carousel';
+import { useGetAllTeamsQuery } from "@/store/api/teamApi";
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import type { Team } from "@/store/api/teamApi";
 
 
 // Define the type for a single team member for type safety
@@ -50,11 +53,19 @@ const TeamMemberCard: React.FC<{ member: TeamMember }> = ({ member }) => (
 const Teams: React.FC = () => {
 
   const [showTeamModal, setShowTeamModal] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState<Team>();
+
+  const { data: teams, isLoading, isError, error} = useGetAllTeamsQuery();
+
+  if (isLoading) return <p>Chargement...</p>;
+  if (isError) return <p>Erreur : {(error as FetchBaseQueryError).status}</p>;
 
   function handleShowTeam () {
     
     setShowTeamModal(true);
   }
+
+  console.log('TEAM DATA :',  teams)
 
   return (
     <section className="font-sans">
