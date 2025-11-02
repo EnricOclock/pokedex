@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Briefcase, ChevronLeft, ChevronRight, Heart } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
 import type { Pokemon } from "@/store/api/pokemonApi";
 
 
@@ -49,12 +49,18 @@ export default function OrbitCarousel({teamMembers = []}:TeamMembersProps) {
   // Calculate rotation for each profile
   const getRotation = React.useCallback(
     (index: number): number => (index - activeIndex) * (360 / teamMembers.length),
-    [activeIndex]
+    [activeIndex, teamMembers]
   );
 
   // Navigation
-  const next = () => setActiveIndex((i) => (i + 1) % teamMembers.length);
-  const prev = () => setActiveIndex((i) => (i - 1 + teamMembers.length) % teamMembers.length);
+  const next = React.useCallback(
+    () => setActiveIndex((i) => (i + 1) % teamMembers.length),
+    [teamMembers.length]
+  );
+  const prev = React.useCallback(
+    () => setActiveIndex((i) => (i - 1 + teamMembers.length) % teamMembers.length),
+    [teamMembers.length]
+  );
 
   const handleProfileClick = React.useCallback((index: number) => {
     if (index === activeIndex) return;
@@ -70,7 +76,7 @@ export default function OrbitCarousel({teamMembers = []}:TeamMembersProps) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [next, prev]);
 
   // If there are no team members, render a small placeholder to avoid accessing undefined.
   if (teamMembers.length === 0) {
