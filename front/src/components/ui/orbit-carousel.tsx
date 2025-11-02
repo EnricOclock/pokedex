@@ -2,8 +2,11 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Briefcase, ChevronLeft, ChevronRight } from "lucide-react";
-import type { TeamMember } from "@/pages/Teams";
+import { Briefcase, ChevronLeft, ChevronRight, Heart } from "lucide-react";
+import type { Pokemon } from "@/store/api/pokemonApi";
+
+
+
 
 // --- Utility for fallback images ---
 const safeImage = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -28,14 +31,16 @@ const useIsMobile = (breakpoint: number = 768): boolean => {
 };
 
 interface TeamMembersProps {
-  teamMembers: TeamMember[]
+  teamMembers?: Pokemon[]
 }
 
 
 // --- Main Component ---
-export default function OrbitCarousel({teamMembers}:TeamMembersProps) {
+export default function OrbitCarousel({teamMembers = []}:TeamMembersProps) {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const isMobile = useIsMobile();
+
+  
 
   const containerRadius = isMobile ? 130 : 200;
   const profileSize = isMobile ? 60 : 80;
@@ -66,6 +71,15 @@ export default function OrbitCarousel({teamMembers}:TeamMembersProps) {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  // If there are no team members, render a small placeholder to avoid accessing undefined.
+  if (teamMembers.length === 0) {
+    return (
+      <div className="flex items-center justify-center p-4">
+        <p className="text-sm text-gray-500 dark:text-gray-400">No team members available.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center p-4 relative min-h-[400px] bg-white dark:bg-black transition-colors duration-300">
@@ -103,7 +117,7 @@ export default function OrbitCarousel({teamMembers}:TeamMembersProps) {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              src={teamMembers[activeIndex].imageUrl}
+              src={`/img/${teamMembers[activeIndex].id}.webp`}
               alt={teamMembers[activeIndex].name}
               onError={safeImage}
               className="w-16 h-16 md:w-20 md:h-20 rounded-full mx-auto -mt-10 md:-mt-12 border-4 border-white dark:border-black object-cover shadow-md"
@@ -117,8 +131,8 @@ export default function OrbitCarousel({teamMembers}:TeamMembersProps) {
                 {teamMembers[activeIndex].name}
               </h2>
               <div className="flex items-center justify-center text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
-                <Briefcase size={12} className="mr-1" /> 
-                <span className="truncate">{teamMembers[activeIndex].role}</span>
+                <Heart size={12} className="mr-1" /> 
+                <span className="truncate">{teamMembers[activeIndex].hp}</span>
               </div>
             </motion.div>
             <motion.div 
@@ -149,6 +163,7 @@ export default function OrbitCarousel({teamMembers}:TeamMembersProps) {
         {/* Orbiting Profiles with Counter-Rotation */}
         {teamMembers.map((p, i) => {
           const rotation = getRotation(i);
+          const imageUrl = `./img/${p.id}.webp`
           return (
             <motion.div
               key={p.id}
@@ -177,7 +192,7 @@ export default function OrbitCarousel({teamMembers}:TeamMembersProps) {
                 className="w-full h-full"
               >
                 <motion.img
-                  src={p.imageUrl}
+                  src={imageUrl}
                   alt={p.name}
                   onError={safeImage}
                   onClick={() => handleProfileClick(i)}

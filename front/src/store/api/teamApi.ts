@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { Pokemon } from './pokemonApi';
+
 
 const API_URL = import.meta.env.VITE_API_URL_V1  || "http://localhost:3000";
 
@@ -6,7 +8,7 @@ export interface Team {
   id: number;
   name: string;
   description: string;
-
+  pokemons: Pokemon[];
 }
 
 
