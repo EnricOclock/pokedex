@@ -1,11 +1,23 @@
 import { Pokemon } from "../models/associations.js"; //anciennent "../models/pokemon.model.js"
+import { Type } from '../models/type.model.js';
+
+
 
 export async function getAllPokemons(req, res) {
     try {
 
         // Récupérer la liste des Pokemons
         const pokemons = await Pokemon.findAll({
-          order: [["id", "asc"]]});
+          order: [["id", "asc"]],
+          include: [
+            {
+              model: Type,
+              as: "types", // doit correspondre à l'alias défini dans le modèle
+              attributes: ["id", "name", "color"], // on ne prend que les champs utiles
+              through: { attributes: [] }
+            },
+          ],
+        });
       
         // Renvoyer la liste des Pokemons au format JSON avec le code succès 200
         res.status(200).json(pokemons);
