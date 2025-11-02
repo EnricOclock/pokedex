@@ -58,7 +58,7 @@ const Teams: React.FC = () => {
 
   return (
     <section className="font-sans">
-      <div className=" mx-auto px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <div className=" relative mx-auto px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">

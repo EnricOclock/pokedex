@@ -14,8 +14,12 @@ export default function App() {
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center">
+
+      <header className='sticky z-50 top-0'>
       <MenuBar onProfileClick={() => 
         setIsProfileOpen(true)}/>
+      </header>
+
       <main>
         <Routes>
           <Route path="/" element={<Home/>}/>
@@ -28,3 +32,4 @@ export default function App() {
     </div>
   )
 }
+
