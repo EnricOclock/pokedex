@@ -40,8 +40,6 @@ export default function OrbitCarousel({teamMembers = []}:TeamMembersProps) {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const isMobile = useIsMobile();
 
-  
-
   const containerRadius = isMobile ? 130 : 200;
   const profileSize = isMobile ? 60 : 80;
   const containerSize = containerRadius * 2 + 100;

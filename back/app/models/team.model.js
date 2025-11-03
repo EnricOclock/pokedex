@@ -1,8 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../database.js";
 
-
-
 export class Team extends Model {}
 
 Team.init({

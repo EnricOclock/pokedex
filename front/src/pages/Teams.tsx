@@ -65,7 +65,7 @@ const Teams: React.FC = () => {
               <Modal
                 isOpen={showTeamModal}
                 onClose={() => setShowTeamModal(false)}
-                title={`Details de l'équipe ${selectedTeam?.name}`}
+                title={`${selectedTeam?.name}`}
               >
                 <OrbitCarousel teamMembers={teamMembers}/>
           

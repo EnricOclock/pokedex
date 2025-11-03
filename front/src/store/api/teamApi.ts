@@ -22,8 +22,15 @@ export const teamApi = createApi({
     }),
     getTeamById: builder.query<Team, string>({
       query: (id: string) => `/teams/${id}`,
-    })
+    }),
+    createOneTeam: builder.mutation<{ success: boolean; message: string }, FormData>({
+      query: (team) => ({
+        url: "/teams",
+        method: "POST",
+        body: team,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllTeamsQuery, useGetTeamByIdQuery } = teamApi;
+export const { useGetAllTeamsQuery, useGetTeamByIdQuery, useCreateOneTeamMutation } = teamApi;
