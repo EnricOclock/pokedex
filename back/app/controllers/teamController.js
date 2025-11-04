@@ -82,24 +82,54 @@ export async function createOneTeam(req, res) { //body {"name": , "description"}
   }
 }
 
+
 export async function addPokemonToTeam(req, res) {
   try {
-  const { idPokemon, idTeam } = req.params;
-  const pokemon = await Pokemon.findByPk(idPokemon);
-  const team = await Team.findByPk(idTeam, {
-    include: [
-      {
+    console.log('REICEIVED PARAMS: ', req.params)
+    const { idTeam, idPokemon } = req.params;
+
+    const teamId = parseInt(idTeam, 10);
+    const pokemonId = parseInt(idPokemon, 10);
+
+    if (isNaN(teamId) || isNaN(pokemonId)) {
+      return res.status(400).json({ error: 'Invalid ID format' });
+    }
+
+    console.log('idPokemon extrait :', idPokemon);
+    
+    const pokemon = await Pokemon.findByPk(idPokemon);
+    if (!pokemon) {
+      return res.status(404).json({ error: "Pokemon not found" });
+    }
+
+
+    const team = await Team.findByPk(idTeam, {
+      include: [
+        {
+          association: "pokemons",
+          include: "types",
+        },
+      ],
+    });
+
+    if (!team) {
+      return res.status(404).json({ error: "Team not found" });
+    }
+
+    // ✅ Vérifier AVANT d'ajouter
+    if (team.pokemons.length >= 5) {
+      return res.status(400).json({ error: "Team already has 5 Pokémon" });
+    }
+
+    await team.addPokemon(pokemon);
+    await team.reload({ 
+      include: [{
         association: "pokemons",
-        include: "types",
-      },
-    ],
-  }); 
-  await team.addPokemon(pokemon);
-  await team.reload();
-  if (team.pokemons.length >= 5) {
-    return res.status(401).json("trop de pokemon dans la team");
-  }
-  res.status(200).json(team);
+        include: "types"
+      }]
+    });
+
+    res.status(200).json(team);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Unexpected server error" });

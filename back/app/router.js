@@ -18,6 +18,10 @@ router.post("/teams", teamController.createOneTeam);
 router.patch("/teams/:id", teamController.updateTeam);
 router.delete("/teams/:id", teamController.deleteTeam);
 
+router.post('/team/:idTeam/pokemon/:idPokemon', teamController.addPokemonToTeam);
+//router.put('/team/:id', teamController.editTeam);
+
+
 //Types routes
 router.get("/types", typeController.getAllTypes);
 router.get("/types/:id", typeController.getOneType);
