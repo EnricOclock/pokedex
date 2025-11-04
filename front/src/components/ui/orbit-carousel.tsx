@@ -8,6 +8,8 @@ import type { Pokemon } from "@/store/api/pokemonApi";
 
 
 
+
+
 // --- Utility for fallback images ---
 const safeImage = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
   const target = e.target as HTMLImageElement;
@@ -31,7 +33,7 @@ const useIsMobile = (breakpoint: number = 768): boolean => {
 };
 
 interface TeamMembersProps {
-  teamMembers?: Pokemon[]
+  teamMembers?: Pokemon[],
 }
 
 

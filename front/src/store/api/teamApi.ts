@@ -5,10 +5,15 @@ import type { Pokemon } from './pokemonApi';
 const API_URL = import.meta.env.VITE_API_URL_V1  || "http://localhost:3000";
 
 export interface Team {
-  id: number;
+  id: string;
   name: string;
   description: string;
   pokemons: Pokemon[];
+}
+
+export interface CreateTeamForm {
+  name: string;
+  description: string;
 }
 
 
@@ -27,7 +32,7 @@ export const teamApi = createApi({
       query: (id: string) => `/teams/${id}`,
       providesTags: [{ type: "Teams"}]
     }),
-    createOneTeam: builder.mutation<{ success: boolean; message: string }, FormData>({
+    createOneTeam: builder.mutation<{ success: boolean; message: string }, CreateTeamForm>({
       query: (team) => ({
         url: "/teams",
         method: "POST",
@@ -43,10 +48,10 @@ export const teamApi = createApi({
       }),
       invalidatesTags: [{ type: "Teams"}]
     }),
-    deleteOneTeam: builder.mutation<{ success: boolean; message: string }, string>({
+    deleteOneTeam: builder.mutation<void, string>({
       query: (teamId) => ({
         url: `/teams/${teamId}`,
-        method: "DELETE"
+        method: "DELETE",
       }),
       invalidatesTags: [{ type: "Teams" }]
     }),
@@ -57,7 +62,14 @@ export const teamApi = createApi({
       }),
       invalidatesTags: [{ type: "Teams" }]
     }),
+    removePokemonToTeam: builder.mutation<Team, { idTeam: string; idPokemon: string }>({
+      query: ({ idTeam, idPokemon }) => ({
+        url: `/team/${idTeam}/pokemon/${idPokemon}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Teams" }]
+    }),
   }),
 });
 
-export const { useGetAllTeamsQuery, useGetTeamByIdQuery, useCreateOneTeamMutation, useAddPokemonToTeamQuery, useDeleteOneTeamMutation, useUpdateTeamMutation } = teamApi;
+export const { useGetAllTeamsQuery, useGetTeamByIdQuery, useCreateOneTeamMutation, useAddPokemonToTeamMutation, useRemovePokemonToTeamMutation, useDeleteOneTeamMutation, useUpdateTeamMutation } = teamApi;
