@@ -1,5 +1,6 @@
 import type { Pokemon } from "@/store/api/pokemonApi";
 import { Heart } from "lucide-react";
+import { Badge } from './ui/badge';
 
 interface TeamMemberCardProps {
   pokemon: Pokemon;
@@ -24,11 +25,15 @@ export const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ onClick, pokemon
         />
       </div>
       <div className="flex items-center-safe gap-2">
-      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">{pokemon.name}</h3>
-      <div className="flex gap-2  top-2 right-2 sm:top-4 sm:right-4 bg-black/70 dark:bg-black/70 text-white p-1.5 sm:p-2.5 rounded-full transition-colors hover:text-red-500 backdrop-blur-sm border border-white/20">
-        <Heart className="w-4 h-4 sm:w-6 sm:h-6" />
-        <p className="text-xs sm:text-sm text-white dark:text-gray-400 mt-1">{pokemon.hp}</p>
-      </div>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">{pokemon.name}</h3>
+        
+          {pokemon.types.map((type) => (
+          <Badge 
+            className="shadow-sm border-2 rounded-full shadow-accent-foreground" 
+            key={type.id}
+            style={{ backgroundColor: `#${type.color}` }}
+            >{type.name}</Badge>))}
+            
       </div>
     
     </div>

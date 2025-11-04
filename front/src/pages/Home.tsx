@@ -28,7 +28,7 @@ export default function Home() {
   console.log('Pokemon DATA :', pokemons)
 
   return (
-    <div className="relative p-4 sm:p-6 lg:p-8 overflow-hidden">
+    <div className="relative mt-12 p-4 sm:p-6 lg:p-8 overflow-hidden">
       {/* Google Font Import */}
       <style>
         {`@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');`}
@@ -68,7 +68,7 @@ export default function Home() {
     <Modal
       isOpen={showDetailsModal}
       onClose={() => setShowDetailsModal(false)}
-      title={"Details du pokémon"}
+      title='Détails'
     >
       {selectedPokemon ? (
           <Card pokemon={selectedPokemon}/>

@@ -43,7 +43,7 @@ const Teams: React.FC = () => {
 
   return (
     <section className="font-sans">
-      <div className=" relative mx-auto px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <div className=" relative mx-auto px-4 py-16 sm:px-6 lg:px-8 lg:py-24 ">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
@@ -56,11 +56,15 @@ const Teams: React.FC = () => {
 
         {/* Team Members Grid - Adjusted for 12 members */}
         <div  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-6 gap-y-12 p-4 border rounded-2xl shadow-2xl">
+          <ul className='flex flex-col gap-4'>
           {teams?.map((team) => (
             
-            <TeamMemberCard onClick={() => handleShowTeam(team)} key={team.name} team={team} />
+            <li className='text-center items-center'>
+              <TeamMemberCard onClick={() => handleShowTeam(team)} key={team.name} team={team} />  
+            </li>
            
           ))}
+          </ul>
         </div>
               <Modal
                 isOpen={showTeamModal}
