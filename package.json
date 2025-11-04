@@ -1,0 +1,24 @@
+{
+  "name": "new-opokedex",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run dev --prefix back\" \"npm run dev --prefix front\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EnricOclock/pokedex.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/EnricOclock/pokedex/issues"
+  },
+  "homepage": "https://github.com/EnricOclock/pokedex#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
