@@ -15,7 +15,7 @@ export default function App() {
   return (
     <div className="flex min-h-svh flex-col items-center justify-center">
 
-      <header className='sticky z-50 top-0'>
+      <header className='fixed top-0 z-50'>
       <MenuBar onProfileClick={() => 
         setIsProfileOpen(true)}/>
       </header>
